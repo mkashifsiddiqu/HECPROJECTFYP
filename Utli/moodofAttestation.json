@@ -1,0 +1,26 @@
+{
+    "Walk-in (Urgent Attestation)":[
+        {
+           "city":[
+            {
+                "value":"Islamabad"
+            },
+            {
+                "value":"Peshawar"
+               
+            },
+            {
+                "value": "Lahore"
+               
+            },
+            {
+                "value":"Karachi"
+                
+            },
+            {
+                "value":"Quetta"
+            }
+           ]
+        }
+    ]
+}
