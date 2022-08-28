@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {loginuserReducer} from './loginuserReducer';
 import stdLoginReducer from './stdLoginReducer'
 import loginFPReducer from './FPloginReducer';

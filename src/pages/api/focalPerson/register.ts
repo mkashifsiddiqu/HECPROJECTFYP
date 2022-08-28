@@ -2,7 +2,7 @@
 import ConnectDb from '../../../Server/middleware/connection';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import FPLogin from '../../../Server/Models/FocalPerson/FPLogin';
-import sendNewPassword from '../../../Server/MailSender/mailer'
+import {sendNewPassword} from '../../../Server/MailSender/mailer'
 import CryptoJS from 'crypto-js'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method == `POST`) {

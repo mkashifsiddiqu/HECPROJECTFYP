@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { legacy_createStore } from 'redux'
 import rootReducer from './reducer/index'
 

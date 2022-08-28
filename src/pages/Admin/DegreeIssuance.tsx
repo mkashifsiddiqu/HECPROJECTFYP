@@ -105,7 +105,8 @@ const DegreeVerification = () => {
     }
   }
   const verifyApplication =async () =>{
-    const data ={ApplicationId,applicationStatus:ApplicationStatus}
+    console.log(`file in Client before vp`,uploadDegreeLink)
+    const data ={ApplicationId,applicationStatus:ApplicationStatus,uploadDegreeLink}
     console.log(data)
     const res = await fetch(`http://localhost:3000/api/Student/Application/submitApplication`, {
       method: `POST`, // or 'PUT'
@@ -218,7 +219,7 @@ const [open, setOpen] = React.useState(false);
     setOpen(false)
     setuploadFrontLink(``)
     setuploadBackLink(``)
-    setuploadDegreeLink(``)
+    //setuploadDegreeLink(``)
     SetInsituteName(``)
     setProgram(``)
     setInsistuteNameOnDegree(``)

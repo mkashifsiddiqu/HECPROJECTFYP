@@ -1,7 +1,6 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React,{useEffect} from 'react';
-import styles from '../../../styles/SideBar.module.css';
+import styles from '@/styles/SideBar.module.css';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -35,7 +34,7 @@ const SideBar = () => {
   const dispatch=useDispatch()
   const router = useRouter();
   const list = useSelector((state) => state.loginFPReducer.userData);
-  const {email,name,pages}= list.data;
+  const {pages}= list.data
   useEffect(() => {
   const name =getCookie(`nameFP`) 
   const email=getCookie(`emailFP`) 

@@ -1,7 +1,6 @@
-/* eslint-disable prettier/prettier */
 import { Paper, Typography,Button,Box,styled } from '@mui/material';
-import qrcode from '../../../../public/Login/qrcode.png';
-import bgverify from '../../../../public/Login/verify.png';
+import qrcode from '@/public/Login/qrcode.png';
+import bgverify from '@/public/Login/verify.png';
 import React from 'react';
 import Image from 'next/image';
 import Modal from '@mui/material/Modal';

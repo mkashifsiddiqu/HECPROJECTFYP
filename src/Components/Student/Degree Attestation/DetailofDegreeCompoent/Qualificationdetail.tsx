@@ -1,18 +1,7 @@
-/* eslint-disable prettier/prettier */
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Autocomplete,
-  Box,
-  Button,
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material';
+  Accordion,AccordionDetails,AccordionSummary,Autocomplete,
+  Box,Button,Checkbox,Divider,FormControlLabel,
+  Grid,TextField,Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { FC, useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -38,17 +27,17 @@ const useStyles = makeStyles({
 });
 interface NextACProps{
   Mode:string,
-  nextAccord:string | null,
+  nextAccord:string ,
   setnextAccord:React.Dispatch<React.SetStateAction<string>>
-  Qualilevel:string | null,
+  Qualilevel:string ,
   SetQaliLevel:React.Dispatch<React.SetStateAction<string>>
   degStatus:string, 
   setDegStatus:React.Dispatch<React.SetStateAction<string>>,
-  degstart:Date | null ,
-  handleStart:(newValue: Date | null) => void,
-  endDeg:Date | null,
-  handleEnd:(newValue: Date | null) => void,
-  NameDeg:string | null,
+  degstart:Date  ,
+  handleStart:(newValue: Date ) => void,
+  endDeg:Date ,
+  handleEnd:(newValue: Date ) => void,
+  NameDeg:string ,
   setNameDeg:React.Dispatch<React.SetStateAction<string>>
 }
 interface QualiProps{
@@ -100,17 +89,17 @@ export default function Qualificationdetail({
     <div>
       <Box sx={{ m: 4 }}>
         <Accordion elevation={0}
-          sx={{backgroundColor:'#fff'}}
+          sx={{backgroundColor:`#fff`}}
           expanded={nextAccord===`open` && expanded === `panel1`}
           onChange={handleChange(`panel1`)}
         >
           <AccordionSummary>
-          <Box width={"100%"}>
+          <Box width={`100%`}>
             <Box sx={{ display: `flex`, justifyContent: `space-between`,width:`100%` }}>
-              <Typography fontSize={"14.43px"} color={'#48465b'} fontWeight={700}>Qualification Details</Typography>
+              <Typography fontSize={`14.43px`} color={`#48465b`} fontWeight={700}>Qualification Details</Typography>
               <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
             </Box>
-            <Divider sx={{margin:"10px 0 0 0"}}/>
+            <Divider sx={{margin:`10px 0 0 0`}}/>
             </Box>
           </AccordionSummary>
           <AccordionDetails className={classes.box}>

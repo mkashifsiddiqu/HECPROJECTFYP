@@ -1,21 +1,17 @@
-/* eslint-disable prettier/prettier */
-import * as React from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { Avatar, Box, Link, Typography } from '@mui/material';
-import picture from '../../../../public/logo.png'
+import { Avatar, Box, Typography } from '@mui/material';
+import picture from '@/public/logo.png'
 import Image from 'next/image';
-import person from '../../../../public/prob.png'
-import logout from '../../../../public/logbtn.png'
+import logout from '@/public/logbtn.png'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux';
 export default function BasicMenu() {
   const list = useSelector((state)=>state.loginFPReducer.userData)
-  const {name,email,pages,instituteName} = list.data
-  console.log(instituteName)
-  console.log(pages)
+  const {name,email} = list.data
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

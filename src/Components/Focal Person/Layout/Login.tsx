@@ -1,6 +1,4 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable prettier/prettier */
 import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material';
 import Image from 'next/image';
@@ -22,7 +20,7 @@ import type { ChangeEvent } from 'react'
 import { loginFP } from '@/Components/Redux/action/index'
 import { useDispatch } from 'react-redux'
 import { setCookie } from 'cookies-next';
-
+const Domain= process.env.Domain
 const theme = createTheme({
   typography: {
     fontFamily: `montserrat`,
@@ -43,7 +41,7 @@ const Login = () => {
   const onSubmit = async (e: MouseEvent) => {
     e.preventDefault();
     const data = { email, password }
-    const res = await fetch(`/api/focalPerson/login`, {
+    const res = await fetch(`${Domain}/api/focalPerson/login`, {
       method: `POST`, // or 'PUT'
       headers: {
         'Content-Type': `application/json`,
@@ -90,7 +88,7 @@ const Login = () => {
             display: `flex`, flexDirection: `column`,
             alignItems: { lg: `flex-start`, md: `center`, sm: `center`, xs: `center` }
           }}>
-            <Image sx={{ marginBottom: `10px`, width: `20px`, height: `92px`, position: `fixed` }} src={logo} alt={`logo`} />
+            <Image src={logo} alt={`logo`} />
             <Typography fontSize={`27px`} fontWeight={`600`} variant="h3" color="#fff" sx={{ mb: `6.5px` }}>Welcome To {<br />} Higher Education Commission</Typography>
 
           </Box>
@@ -248,7 +246,8 @@ const Login = () => {
                     </Button>
                   </Box>
                   <Box display={`flex`} justifyContent={`center`} sx={{ mt: `25px` }}>
-                    <Typography fontWeight={`600`}>Any Confusion?&nbsp;<Link href={`#`} underline='none' color={`#006E99`}>Download Manual</Link></Typography>
+                    <Typography fontWeight={`600`}>Any Confusion?&nbsp;
+                    <Link href={`#`} underline='none' color={`#006E99`}>Download Manual</Link></Typography>
                   </Box>
                 </>}
               </Paper>
@@ -316,7 +315,7 @@ const Login = () => {
                   <Button variant="contained" sx={{
                     width: `382px`, height: `48px`, mt: `12px`, backgroundColor: `#1BB55E`,
                     '&:hover': { backgroundColor: `#1BB55E` }
-                  }} onClick={onSubmit}>Sign in</Button>
+                  }} onClick={(e)=>onSubmit(e)}>Sign in</Button>
                   <Box sx={{ display: `flex`, justifyContent: `center`, mt: `12px` }}>
                     <Grid>
                       <Grid

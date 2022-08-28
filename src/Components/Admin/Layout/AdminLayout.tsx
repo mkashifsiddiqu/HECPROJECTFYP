@@ -14,7 +14,7 @@ const AdminLayout = ({children}:Props) => {
      
       <Header/>
       <SideBar/>
-      <Box sx={{ m: `6em .75em 1em 7em` }}>
+      <Box sx={{ m: `6em .75em 1em 7em`,height:`100vh` }}>
         {children}
       </Box>
       <Footer/>

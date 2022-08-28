@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import React, { useEffect, useState } from 'react';
-import '../styles/globals.css';
+import '@/styles/globals.css';
 import { Provider } from 'react-redux';
 import store from '@/Components/Redux/store'
 import Head from 'next/head';
@@ -14,7 +14,7 @@ import NoneLayout from '@/Components/NoneLayout/NoneLayout';
 import FocalPerson from '@/Components/Focal Person/Layout/FPLayout';
 import Loading from '@/Components/Student/Layout/Loading'
 //NextAuth Libraray
-type Props = {
+type ChildProps = {
   children: JSX.Element[] | JSX.Element;
 };
 const layouts = {
@@ -37,9 +37,8 @@ const theme = createTheme({
 });
 export default function MyApp({ 
     Component,
-    pageProps: { session,
-       ...pageProps }}): JSX.Element {
-  const Layout = layouts[Component.layout] || ((children:Props) => <>{children }</>);
+    pageProps: {...pageProps }}): JSX.Element {
+  const Layout = layouts[Component.layout] || ((children:ChildProps) => <>{children }</>);
   const [loading, setloading] = useState<boolean>(false)
   useEffect(() => {
     if (typeof window !== `undefined`) {
@@ -56,7 +55,8 @@ export default function MyApp({
           };
     }
 }, []);
-  return (
+
+return (
     <>
       <Head>
         <meta charSet="utf-8" />
@@ -78,6 +78,7 @@ export default function MyApp({
          <ScrollToTop/>
       </Layout>
        }
+
       </ThemeProvider>
       </Provider>
     </>

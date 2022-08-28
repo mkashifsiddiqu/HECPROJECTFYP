@@ -1,9 +1,8 @@
-/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react'
-import { Alert, Autocomplete, Backdrop, Box, Button, Fade, Icon, IconButton, Modal, Snackbar, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Alert, Autocomplete, Backdrop, Box, Button, Fade,IconButton, Modal, Snackbar, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { TextField } from '@mui/material';
 
-import AddIcon from '@mui/icons-material/Add';
+
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';

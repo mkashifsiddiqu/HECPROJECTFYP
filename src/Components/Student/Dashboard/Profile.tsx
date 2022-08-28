@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable prettier/prettier */
 import { Divider, LinearProgress, Paper, Typography,Box,styled } from '@mui/material';
 import React,{useState,useEffect} from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -8,6 +7,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { linearProgressClasses } from '@mui/material/LinearProgress';
 import { useSelector } from 'react-redux';
+const Domain = process.env.Domain
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 12,
   borderRadius: 3,
@@ -26,7 +26,7 @@ const Profile = () => {
   const [ProfileImage,setProfileImage] =useState<string>(``)
   const getProfile =async ()=>{
   const  data={email}
-  const res = await fetch(`http://localhost:3000/api/Profile/student/getProfilePicture`, {
+  const res = await fetch(`${Domain}/api/Profile/student/getProfilePicture`, {
   method: `POST`, //BECAUSE WE CHECK WITH EMAIL 
   headers: {
       'Content-Type': `application/json`,
@@ -57,9 +57,9 @@ useEffect(() => {
           <Box>
             <Box display={`flex`} justifyContent={`center`}>
               <Box
-               sx={{ backgroundImage:`url(http://localhost:3000/api/Profile/student/${ProfileImage})`,
+               sx={{ backgroundImage:`url(${Domain}/api/Profile/student/${ProfileImage})`,
                backgroundSize:`100% 100%`,backgroundRepeat:`no-repeat`
-               , borderRadius: `50%`, border:'3px solid #82c4de' }}
+               , borderRadius: `50%`, border:`3px solid #82c4de` }}
                 width={120}
                 height={120}
               ></Box>

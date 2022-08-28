@@ -1,8 +1,7 @@
-/* eslint-disable prettier/prettier */
 import React, { useState,useEffect, FC } from 'react';
 import { Autocomplete, Divider, FormControl, Grid, 
   FormLabel,RadioGroup,FormControlLabel,Radio,
-  InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+  TextField, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import Collapse from '@mui/material/Collapse';
@@ -16,7 +15,6 @@ import TableRow from '@mui/material/TableRow';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useSelector } from 'react-redux';
-
 import stateTable from './../../../../Utli/countryDetail/tbl_state.json'
 const useStyles = makeStyles({
   main: {

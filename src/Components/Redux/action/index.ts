@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 //That is for Admin
 export const loginuser = (data:any) => {
   return {

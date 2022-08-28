@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Divider, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Link from 'next/link';
@@ -22,7 +21,7 @@ const Suggestions = () => {
             sx={{
               display: `flex`,
               justifyContent: `space-between`,
-              alignItems:'center',
+              alignItems:`center`,
               padding: `1em`,
               color: `#3e3c76`,
               fontFamily: `montserrat`,
@@ -40,7 +39,7 @@ const Suggestions = () => {
             sx={{
               display: `flex`,
               justifyContent: `space-between`,
-              alignItems:'center',
+              alignItems:`center`,
               padding: `1em`,
               color: `#3e3c76`,
               fontFamily: `montserrat`,
@@ -58,7 +57,7 @@ const Suggestions = () => {
             sx={{
               display: `flex`,
               justifyContent: `space-between`,
-              alignItems:'center',
+              alignItems:`center`,
               padding: `1em`,
               color: `#3e3c76`,
               fontFamily: `montserrat`,
@@ -76,8 +75,7 @@ const Suggestions = () => {
             sx={{
               display: `flex`,
               justifyContent: `space-between`,
-              alignItems:'center',
-              alignItems:'center',
+              alignItems:`center`,
               padding: `1em`,
               color: `#3e3c76`,
               fontFamily: `montserrat`,

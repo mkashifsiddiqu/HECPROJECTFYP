@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react'
 import Header from './Header'
 import SideBar from './SiderBar'
@@ -14,7 +13,7 @@ const AdminLayout = ({children}:Props) => {
      
       <Header/>
       <SideBar/>
-      <Box sx={{ m: `7.5em 1em 1em 7.5em` }}>
+      <Box sx={{ m: `7.5em 1em 1em 7.5em`,height:`100vh` }}>
         {children}
       </Box>
       <Footer/>

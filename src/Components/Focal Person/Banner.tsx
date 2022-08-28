@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import Image from 'next/image';
 import React from 'react';
 import banner from '@/public/infobg.png';
@@ -7,12 +6,12 @@ import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 const Banner = () => {
   const list = useSelector((state)=>state.loginFPReducer.userData)
-  const {name,email,pages,instituteName} = list.data
+  const {name,pages,instituteName} = list.data
   console.log(instituteName)
   console.log(pages)
   const user = name;
   return (
-    <div>
+    <>
       <Box
         sx={{
           display: `flex`,
@@ -53,7 +52,7 @@ const Banner = () => {
           <Image src={info} alt="info" />
         </Box>
       </Box>
-    </div>
+    </>
   );
 };
 

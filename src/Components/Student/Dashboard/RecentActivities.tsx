@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Paper, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
@@ -20,7 +19,7 @@ const RecentActivities = () => {
           <Timeline>
           <TimelineItem>
           <TimelineOppositeContent color="text.secondary">
-            03-05-2022
+            21-08-2022
           </TimelineOppositeContent>
           <TimelineSeparator>
             <TimelineDot variant='outlined' />
@@ -30,7 +29,7 @@ const RecentActivities = () => {
         </TimelineItem>
         <TimelineItem>
           <TimelineOppositeContent color="text.secondary">
-          26-07-2022
+          26-08-2022
           </TimelineOppositeContent>
           <TimelineSeparator>
             <TimelineDot variant='outlined' />

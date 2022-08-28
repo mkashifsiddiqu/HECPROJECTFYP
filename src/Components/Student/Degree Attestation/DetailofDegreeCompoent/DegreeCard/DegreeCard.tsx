@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Button, Card, Checkbox, Grid, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { FC, useState, useEffect } from 'react'
@@ -41,13 +40,11 @@ const DegreeCard: FC<degreeProps> = ({
          const data ={id,NameOnDegree,QualificationLevel,year,
             ProgramTitle,InstituteName}
         if (Check) 
-        {   
-            console.log(`Degree Card :`,data,`/nDebug Sending to Next Page`) 
-            dispatch(selectedDegree(data))
+        {  
+             dispatch(selectedDegree(data))
         }
     }, [Check])
-
-    return (
+return (
         <div>
             <Card sx={{ backgroundColor: `#fdfdfd` }} elevation={1}>
                 <Box display={`flex`} padding={`20px 30px`}>

@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -30,10 +29,11 @@ import {
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
-import edit from '../../../../public/gedit.svg';
-import download from '../../../../public/gdownload.svg';
+import edit from '@/public/gedit.svg';
+import download from '@/public/gdownload.svg';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+const Domain = process.env.Domain
 function TablePaginationActions(props: {
   count: any;
   page: any;
@@ -159,7 +159,7 @@ export default function CustomPaginationActionsTable() {
   //=============================For Application list get from Data Base
   const getExistApplication = async()=>{
     const data ={email}
-    const res = await fetch(`/api/Student/Application/getExistApplication`, {
+    const res = await fetch(`${Domain}/api/Student/Application/getExistApplication`, {
       method: `POST`, //BECAUSE WE CHECK WITH EMAIL 
       headers: {
         'Content-Type': `application/json`,
@@ -205,12 +205,6 @@ export default function CustomPaginationActionsTable() {
   const handleChangeCardsPerPage = (event: { target: { value: string } }) => {
     setCardsPerPage(parseInt(event.target.value, 10));
   };
-  const DateFormat = (date:string)=>{
-    console.log(date)
-    const full = new Date(date)
-    const format = `${full.getDay()}/${full.getMonth()}/${full.getFullYear()}`
-    return format
-  }
   return (
     <Box margin={`1em`}>
       <TableContainer component={Paper}>

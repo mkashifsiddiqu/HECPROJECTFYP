@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import Image from 'next/image';
 import React from 'react';
 import banner from '@/public/infobg.png';

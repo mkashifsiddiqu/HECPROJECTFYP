@@ -15,8 +15,8 @@ export default function BasicMenu() {
 
   return (
     <div>
-      <IconButton onClick={handleClick} sx={{marginRight:"10px"}}>
-        <Badge badgeContent={<Typography paddingTop={"1px"} fontFamily={"montserrat"} fontSize={10} fontWeight={700}>20</Typography>} color="success" sx={{padding:"1px"}}>
+      <IconButton onClick={handleClick} sx={{marginRight:`10px`}}>
+        <Badge badgeContent={<Typography paddingTop={`1px`} fontFamily={`montserrat`} fontSize={10} fontWeight={700}>20</Typography>} color="success" sx={{padding:`1px`}}>
           <NotificationsNoneOutlinedIcon color='disabled'/>
           </Badge>
       </IconButton>
@@ -26,15 +26,15 @@ export default function BasicMenu() {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'basic-button',
+          'aria-labelledby': `basic-button`,
         }}
         anchorOrigin={{
-          vertical:'bottom',
-          horizontal:'left'
+          vertical:`bottom`,
+          horizontal:`left`
         }}
         transformOrigin={{
-          vertical:'top',
-          horizontal:'center'
+          vertical:`top`,
+          horizontal:`center`
         }}
       >
       <Notification/>

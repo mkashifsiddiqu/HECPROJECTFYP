@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-key */
-/* eslint-disable prettier/prettier */
-import * as React from 'react';
+import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,6 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { Box, Button } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useSelector } from 'react-redux';
+const Domain = process.env.Domain
 interface Pages{
   name:string
 }
@@ -33,7 +33,7 @@ export default function BasicTable({refresh,setFresh}:RProp) {
   const fetchTable = async () => {
     setFresh(false)
     const data = {instituteName}
-    const res = await fetch(`/api/focalPerson/getAllUser/`, {
+    const res = await fetch(`${Domain}/api/focalPerson/getAllUser/`, {
       method: `POST`, // or 'PUT'
       headers: {
         'Content-Type': `application/json`,

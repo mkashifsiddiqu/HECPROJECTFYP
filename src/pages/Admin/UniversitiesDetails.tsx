@@ -1,29 +1,23 @@
 /* eslint-disable prettier/prettier */
-import { Autocomplete, Button, TextField,
-   Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Fade, Modal, Box, Backdrop, Alert } from '@mui/material'
+import {
+  Autocomplete, Button, TextField,
+  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Fade, Modal, Box, Backdrop, Alert
+} from '@mui/material'
 import Snackbar from '@mui/material/Snackbar';
-import React from 'react'
+import React, { useEffect } from 'react'
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete'; 
-import PersonAddIcon from '@mui/icons-material/PersonAdd'; 
-import { createFilterOptions } from '@mui/material/Autocomplete';
-import uni from '../../../Utli/insistute.json'
-import country from '../../../Utli/countries.json'
-import { Add} from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { Add } from '@mui/icons-material';
 //Data Type 
-interface UniOptionType {
-  inputValue?: string;
-  label?: string;
-  value?: number;
-}
 interface fpDetail {
   email: string,
   isActive: boolean
 }
 //Search for Auto0Complete Component
-const filter = createFilterOptions<UniOptionType>();
+
 //Style for Model
 const style = {
   position: `absolute` as 'absolute',
@@ -45,62 +39,180 @@ const tableActionStyle = {
 const UniveristiesDetails = () => {
   //State
   const [getEmail, getfnEmail] = React.useState<fpDetail[]>([])
-  const [value, setValue] = React.useState<UniOptionType>();
-  const [email, setEmail] = React.useState<string>(``)
-  const [btn, setbtn] = React.useState<boolean>(false);
-  const [btn1, setbtn1] = React.useState<boolean>(false);
+   const [email, setEmail] = React.useState<string>(``)
   //state for Model 
   const [open, setOpen] = React.useState<boolean>(false);
   const [open2, setOpen2] = React.useState<boolean>(false);
   const [open3, setOpen3] = React.useState<boolean>(false);
   const [toast, SetToast] = React.useState<boolean>(false);
   const [toastDelete, setToastDelete] = React.useState<boolean>(false);
-  //State for Country or Insisite
-  const [addInstitutes, setAddInstitute] = React.useState<string>(``)
-  const [countryValue, setCountryValue] = React.useState<UniOptionType>();
-  const [addNewCountry, setAddCountry] = React.useState<string>(``)
-  const [UniJSON, SetUniJson] = React.useState<UniOptionType>()
+//Country
+  const [countryId, setCountryId] = React.useState<string>(``)
+  const [countryTitle, setcountryTitle] = React.useState<string>(``)
+  const [countryList, setCountryList] = React.useState([])
+  //Insistute
+  const [insistuteId, setinsistuteId] = React.useState<string>(``)
+  const [instituteName, setinstituteName] = React.useState<string>(``)
+  const [InstituesList, setInstituesList] = React.useState([])
+  const [editmode, setEditMode] = React.useState<boolean>(false)
+  const [toastmsg, setToastMsg] = React.useState<string>(``)
   const handleOpen = () => setOpen(true);
-  const handleClose =()=> setOpen(false)
+  const handleClose = () => setOpen(false)
   const handleClose2 = () => setOpen2(false);
   const handleClose3 = () => setOpen3(false);
   const handleCloseToastDelete = () => setToastDelete(false);
-  //Add new COUNTRY
-  const handleAddNewCountry = () => {
-    const label = addNewCountry;
-    const value = Date.now()
 
-    country.push({ label, value })
-    setAddCountry(``);
-  }
+ //=================================Country =========================
+  const getAllcountryList = async () => {
+    const URL = `http://localhost:3000/api/hec/countryList`
+    const res = await fetch(URL, {
+      method: `GET`, // or 'PUT'
+      headers: {
+        'Content-Type': `application/json`,
+      },
+    })
+    const response = await res.json()
+    if (response) {
+      console.log(`CountryList`, response)
+      setCountryList(response?.country)
 
-  // Add New Univeristy 
-  const handleAddNewInsitute = () => {
-    const label = addInstitutes;
-    const value = Date.now()
-    uni.Insistutes.push({ label, value })
-    console.log(label)
-    setAddInstitute(``);
-    setCountryValue({ label: `` });
+    }
   }
-  // const handleDeleteCountry= ()=>{
-  //      delete 
-  // }
-  //Sort University According to Country
-  // const sortUni = (country:string) =>{
+  const addNewCountryInDB = async () => {
+    handleClose3()
+    const data = { countryTitle }
+    const URL = `http://localhost:3000/api/hec/AddNewCountry`
+    const res = await fetch(URL, {
+      method: `POST`, // or 'PUT'
+      headers: {
+        'Content-Type': `application/json`,
+      },
+      body: JSON.stringify(data),
+    })
+    const response = await res.json()
+    if (response.success) {
 
-  // }
-  //Edit Univeristy
-  const handleEdit = () => {
-    let index: number | string = 0;
-    index = uni.Insistutes.indexOf(addNewCountry)
-    console.log(`Index of`, index)
+      SetToast(true)
+      setToastMsg(`New Country is Added`)
+      getAllcountryList()
+      //getProgrambyID()
+    } else if (!response.success) {
+      console.log(response.error)
+      // setProgram(``)
+      // getProgrambyID()
+    }
   }
+  const updateCountry = async () => {
+    handleClose3()
+    const data = { countryId, countryTitle }
+    const URL = `http://localhost:3000/api/hec/updateCountry`
+    const res = await fetch(URL, {
+      method: `PATCH`, // or 'PUT'
+      headers: {
+        'Content-Type': `application/json`,
+      },
+      body: JSON.stringify(data),
+    })
+    const response = await res.json()
+    console.log(response)
+    if (response.success) {
+      SetToast(true)
+      setToastMsg(`Country is Updated ${countryTitle}`)
+      setcountryTitle(``)
+      getAllcountryList()
+      //getProgrambyID()
+    } else if (!response.success) {
+      console.log(response.error)
+      // setProgram(``)
+      // getProgrambyID()
+    }
+  }
+  const delCountry = async () => {
+    const URL = `http://localhost:3000/api/hec/delCountry/${countryId}`
+    const res = await fetch(URL, {
+      method: `DELETE`, // or 'PUT'
+      headers: {
+        'Content-Type': `application/json`,
+      },
+    })
+    const response = await res.json()
+    if (response) {
+      setToastMsg(response?.message)
+      SetToast(true)
+      getAllcountryList()
+    }
+  }
+  //=========================================End of Country===============
+  const updateInsistute = async () => {
+    handleClose2()
+    const data = { insistuteId, instituteTitle: instituteName }
+    const URL = `http://localhost:3000/api/hec/ListOfInsistute/updateInsistute`
+    const res = await fetch(URL, {
+      method: `PATCH`, // or 'PUT'
+      headers: {
+        'Content-Type': `application/json`,
+      },
+      body: JSON.stringify(data),
+    })
+    const response = await res.json()
+    console.log(response)
+    if (response.success) {
+      setToastMsg(response.message)
+      SetToast(true)
+      setinstituteName(``)
+      setcountryTitle(``)
+      setInstituesList([])
+      setCountryList([])
+      getAllcountryList()
+    } else if (!response.success) {
+      console.log(response.error)
+    }
+  }
+  const addNewInsistute = async () => {
+    handleClose2()
+    const data = { countryTitle, instituteTitle: instituteName }
+    const URL = `http://localhost:3000/api/hec/AddNewInsistute`
+    const res = await fetch(URL, {
+      method: `POST`, // or 'PUT'
+      headers: {
+        'Content-Type': `application/json`,
+      },
+      body: JSON.stringify(data),
+    })
+    const response = await res.json()
+    console.log(response)
+    if (response.success) {
+      setToastMsg(response.message)
+      SetToast(true)
+      setinstituteName(``)
+      setcountryTitle(``)
+      setCountryList([])
+      setInstituesList([])
+      getAllcountryList()
+    } else if (!response.success) {
+      console.log(response.error)
+    }
+  }
+  const delInsistute = async () => {
+    const URL = `http://localhost:3000/api/hec/ListOfInsistute/delInsistute/${insistuteId}`
+    const res = await fetch(URL, {
+      method: `DELETE`, // or 'PUT'
+      headers: {
+        'Content-Type': `application/json`,
+      },
+    })
+    const response = await res.json()
+    if (response) {
+      setToastMsg(response?.message)
+      SetToast(true)
+      getAllcountryList()
+    }
+  }
+  //===============================================Add Email ================
   //Api to get All Focal Person(FP) Email
   const fetchEmail = async () => {
-    const instituteName = value?.label
     const data = { instituteName }
-    const res = await fetch(`/api/focalPerson/getAllUser`, {
+    const res = await fetch(`http://localhost:3000/api/focalPerson/getAllUser`, {
       method: `POST`, // or 'PUT'
       headers: {
         'Content-Type': `application/json`,
@@ -154,7 +266,7 @@ const UniveristiesDetails = () => {
       name: `Acount Mangement`,
       link: `ACLManage`
     }]
-    const instituteName = value?.label;
+    //const instituteName = value?.label;
     const isActive = true
     const data = { email, instituteName, isActive, pages }
     console.log(data)
@@ -170,6 +282,7 @@ const UniveristiesDetails = () => {
       fetchEmail();
       console.log(response)
       SetToast(true)
+      setToastMsg(`Email is Added for ${instituteName}`)
     }
   }
   // enable or Disable FP Email 
@@ -195,19 +308,23 @@ const UniveristiesDetails = () => {
 
     SetToast(false);
   };
-    //Action for Toast or SnakBar 
-    const action = (
-      <React.Fragment>
-        <IconButton
-          size="small"
-          aria-label="close"
-          color="inherit"
-          onClick={handleClose}
-        >
-          <CloseIcon fontSize="small" />
-        </IconButton>
-      </React.Fragment>
-    );
+  //Action for Toast or SnakBar 
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+  useEffect(() => {
+    getAllcountryList()
+  }, [])
+
   return (
     <>
       <Box margin={`1em 0`}>
@@ -215,38 +332,42 @@ const UniveristiesDetails = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell sx={{fontWeight:`600`, fontSize:`16px`}}>Label</TableCell>
-                <TableCell sx={{fontWeight:`600`, fontSize:`16px`}}>Field</TableCell>
-                <TableCell sx={{fontWeight:`600`, fontSize:`16px`}}>Counts</TableCell>
-                <TableCell sx={{fontWeight:`600`, fontSize:`16px`}} align='center'>Actions</TableCell>
+                <TableCell sx={{ fontWeight: `600`, fontSize: `16px` }}>Label</TableCell>
+                <TableCell sx={{ fontWeight: `600`, fontSize: `16px` }}>Field</TableCell>
+                <TableCell sx={{ fontWeight: `600`, fontSize: `16px` }}>Counts</TableCell>
+                <TableCell sx={{ fontWeight: `600`, fontSize: `16px` }} align='center'>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell sx={{fontWeight:`600`}} align='left'>Country</TableCell>
+                <TableCell sx={{ fontWeight: `600` }} align='left'>Country</TableCell>
                 <TableCell width={`600px`}>
                   <Autocomplete
-                    value={countryValue}
+                    value={countryTitle}
                     onChange={(event, newValue) => {
                       if (typeof newValue === `string`) {
-                        setCountryValue({
-                          label: newValue,
-                        });
-                      } else if (newValue && newValue.inputValue) {
+                        setcountryTitle(newValue?.countryTitle);
+                      } else if (newValue && newValue?.countryTitlee) {
                         // Create a new value from the user input
-                        setCountryValue({
-                          label: newValue.inputValue,
-                        });
+                        setcountryTitle(newValue?.countryTitle);
+                        setCountryId(newValue?._id)
                       } else {
-                        setCountryValue(newValue);
+                        if(newValue)
+                        {setCountryId(newValue?._id)
+                        setcountryTitle(newValue?.countryTitle);
+                        setInstituesList(newValue?.institutes)}
+                        else{
+                          setinstituteName(``)
+                          setInstituesList([])
+                        }
                       }
                     }
-                  }
+                    }
                     selectOnFocus
                     clearOnBlur
                     handleHomeEndKeys
                     id="countries"
-                    options={country}
+                    options={countryList?countryList:[]}
                     getOptionLabel={(option) => {
                       // Value selected with enter, right from the input
                       if (typeof option === `string`) {
@@ -257,52 +378,60 @@ const UniveristiesDetails = () => {
                         return option.inputValue;
                       }
                       // Regular option
-                      return option.label;
+                      return option?.countryTitle;
                     }}
-                    renderOption={(props, option) => <li {...props}>{option.label}</li>}
+                    renderOption={(props, option) => <li {...props}>{option?.countryTitle}</li>}
                     fullWidth
                     renderInput={(params) => (
-                      <TextField {...params} 
-                      label="Countries" variant="outlined" 
-                      color='success' size='small' />
+                      <TextField {...params}
+                        label="Countries" variant="outlined"
+                        color='success' size='small' />
                     )}
                   />
                 </TableCell>
                 <TableCell>
-                  {/* {country.Countries.length} */}
-
+                  {countryList ? countryList.length : 0}
                 </TableCell>
                 <TableCell sx={tableActionStyle}>
-                  <Button startIcon={<Add />} onClick={() => setOpen3(true)} color={`success`}>Add</Button>
-                  <Button startIcon={<EditIcon/>} disabled={!countryValue}>Edit</Button>
-                  <Button startIcon={<DeleteIcon />} color='error' disabled={!countryValue}>Delete</Button>
+                  <Button startIcon={<Add />} onClick={() => {
+                    setOpen3(true)
+                    setEditMode(false)
+                    setcountryTitle(``)
+                  }} color={`success`}>Add</Button>
+                  <Button startIcon={<EditIcon />} disabled={!countryTitle}
+                    onClick={() => {
+                      setOpen3(true)
+                      setEditMode(true)
+                    }}
+                  >Edit</Button>
+                  <Button startIcon={<DeleteIcon />} color='error' disabled={!countryTitle}
+                    onClick={delCountry}
+                  >Delete</Button>
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell sx={{fontWeight:`600`}} align='left'>Institutes</TableCell>
+                <TableCell sx={{ fontWeight: `600` }} align='left'>Institutes</TableCell>
                 <TableCell>
                   <Autocomplete
                     onSelect={() => fetchEmail()}
-                    value={value}
+                    value={instituteName}
                     onChange={(event, newValue) => {
                       if (typeof newValue === `string`) {
-                        setValue({
-                          label: newValue,
-                        });
+                        setinstituteName(newValue?.instituteTitle);
                       } else if (newValue && newValue.inputValue) {
                         // Create a new value from the user input
-                        setValue({
-                          label: newValue.inputValue,
-                        });
+                        setinstituteName(newValue?.instituteTitle);
+                        setinsistuteId(newValue?._id)
                       } else {
-                        setValue(newValue);
+                        setinstituteName(newValue?.instituteTitle);
+                        setinsistuteId(newValue?._id)
                       }
                     }}
                     selectOnFocus
                     clearOnBlur
                     handleHomeEndKeys
                     id="free-solo-with-text-demo"
-                    options={uni.Insistutes}
+                    options={InstituesList}
                     getOptionLabel={(option) => {
 
                       // Value selected with enter, right from the input
@@ -311,23 +440,33 @@ const UniveristiesDetails = () => {
                       }
                       // Add "xxx" option created dynamically
                       if (option.inputValue) {
-                        return option.inputValue;
+                        return option.inputValue?.instituteTitle;
                       }
                       // Regular option
-                      return option.label;
+                      return option?.instituteTitle;
                     }}
-                    renderOption={(props, option) => <li {...props}>{option.label}</li>}
+                    renderOption={(props, option) => <li {...props}>{option?.instituteTitle}</li>}
                     fullWidth
                     renderInput={(params) => (
                       <TextField {...params} label="Insistute" variant="outlined" color='success' size='small' />
                     )}
                   />
                 </TableCell>
-                <TableCell>{uni.Insistutes.length}</TableCell>
+                <TableCell>{InstituesList ? InstituesList.length : 0}</TableCell>
                 <TableCell sx={tableActionStyle}>
-                  <Button startIcon={<Add />} onClick={() => setOpen2(true)} color={`success`}>Add</Button>
-                  <Button startIcon={<EditIcon/>} onClick={handleEdit} disabled={!value}>Edit</Button>
-                  <Button startIcon={<DeleteIcon />} color='error' disabled={!value}>Delete</Button></TableCell>
+                  <Button startIcon={<Add />} onClick={() => {
+                    setOpen2(true)
+                    setEditMode(false)
+                    setinstituteName(``)
+                  }} color={`success`} disabled={!countryTitle}>Add</Button>
+                  <Button startIcon={<EditIcon />} onClick={() => {
+                    setOpen2(true)
+                    setEditMode(true)
+                  }}
+                    disabled={!instituteName} >Edit</Button>
+                  <Button startIcon={<DeleteIcon />} color='error' disabled={!instituteName}
+                    onClick={delInsistute}
+                  >Delete</Button></TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -336,11 +475,13 @@ const UniveristiesDetails = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell sx={{fontWeight:`600`, fontSize:`16px`}} align="center">Emails</TableCell>
+                <TableCell sx={{ fontWeight: `600`, fontSize: `16px` }} align="center">Emails</TableCell>
                 <TableCell align='center'>
-                  <Button startIcon={<PersonAddIcon/>} onClick={handleOpen} color={`success`} variant={`contained`}>Add Email</Button>
+                  <Button startIcon={<PersonAddIcon />} onClick={handleOpen} color={`success`} variant={`contained`}
+                  disabled={!instituteName}
+                  >Add Email</Button>
                 </TableCell>
-                <TableCell sx={{fontWeight:`600`, fontSize:`16px`}} align="center">Actions</TableCell>
+                <TableCell sx={{ fontWeight: `600`, fontSize: `16px` }} align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -386,111 +527,18 @@ const UniveristiesDetails = () => {
           BackdropProps={{
             timeout: 500,
           }}
+          
         >
           <Fade in={open}>
             <Box sx={style}>
               <Typography id="transition-modal-title" variant="h6" component="h2">
                 Add Email
               </Typography>
-              <Autocomplete
-                    value={countryValue}
-                    onChange={(event, newValue) => {
-                      if (typeof newValue === `string`) {
-                        setCountryValue({
-                          label: newValue,
-                        });
-                      } else if (newValue && newValue.inputValue) {
-                        // Create a new value from the user input
-                        setCountryValue({
-                          label: newValue.inputValue,
-                        });
-                      } else {
-                        setCountryValue(newValue);
-                      }
-                    }
-                  }
-                    selectOnFocus
-                    clearOnBlur
-                    handleHomeEndKeys
-                    id="countries"
-                    options={country}
-                    getOptionLabel={(option) => {
-                      // Value selected with enter, right from the input
-                      if (typeof option === `string`) {
-                        return option;
-                      }
-                      // Add "xxx" option created dynamically
-                      if (option.inputValue) {
-                        return option.inputValue;
-                      }
-                      // Regular option
-                      return option.label;
-                    }}
-                    renderOption={(props, option) => <li {...props}>{option.label}</li>}
-                    fullWidth
-                    renderInput={(params) => (
-                      <TextField {...params} 
-                      label="Countries" variant="outlined" 
-                      color='success' size='small' />
-                    )}
-                  />
-              <Autocomplete
-                value={value}
-                onChange={(event, newValue) => {
-                  if (typeof newValue === `string`) {
-                    setValue({
-                      label: newValue,
-                    });
-                  } else if (newValue && newValue.inputValue) {
-                    // Create a new value from the user input
-                    setValue({
-                      label: newValue.inputValue,
-                    });
-                  } else {
-                    setValue(newValue);
-                  }
-                }}
-                filterOptions={(options, params) => {
-                  const filtered = filter(options, params);
-
-                  const { inputValue } = params;
-                  // Suggest the creation of a new value
-                  const isExisting = options.some((option) => inputValue === option.label);
-                  if (inputValue !== `` && !isExisting) {
-                    filtered.push({
-                      inputValue,
-                      label: `Add New Institues  :"${inputValue}"`,
-                    });
-                  }
-
-                  return filtered;
-                }}
-                selectOnFocus
-                clearOnBlur
-                handleHomeEndKeys
-                id="free-solo-with-text-demo"
-                options={uni.Insistutes}
-                getOptionLabel={(option) => {
-                  // Value selected with enter, right from the input
-                  if (typeof option === `string`) {
-                    return option;
-                  }
-                  // Add "xxx" option created dynamically
-                  if (option.inputValue) {
-                    return option.inputValue;
-                  }
-                  // Regular option
-                  return option.label;
-                }}
-                renderOption={(props, option) => <li {...props}>{option.label}</li>}
-                sx={{ margin: `1em 0 0 0` }}
-                freeSolo
-                renderInput={(params) => (
-                  <TextField {...params} label="Insistute" variant="outlined" color='success' size='small' />
-                )}
-              />
+              <Typography fontSize={`12px`}>
+                For <strong>{instituteName}</strong>
+              </Typography>
               <TextField sx={{ margin: `1em 0 0 0` }} label={`Email`} value={email} onChange={(e) => setEmail(e.target.value)} type='email' color={`success`} size='small' fullWidth />
-              <Button variant={`contained`} sx={{ margin: `1em 0 0 0` }} type='submit' color={`success`} onClick={onSubmit}>Add</Button>
+              <Button variant={`contained`} sx={{ margin: `1em 0 0 0` }} type='submit' color={`success`} onClick={(e)=>onSubmit(e)}>Add</Button>
             </Box>
           </Fade>
         </Modal>
@@ -509,56 +557,20 @@ const UniveristiesDetails = () => {
           <Fade in={open2}>
             <Box sx={style}>
               <Typography id="transition-modal-title" variant="h6" component="h2">
-                Add Institutes
+                Add Institutes  <br />
               </Typography>
-              <Autocomplete
-                    value={countryValue}
-                    onChange={(event, newValue) => {
-                      if (typeof newValue === `string`) {
-                        setCountryValue({
-                          label: newValue,
-                        });
-                      } else if (newValue && newValue.inputValue) {
-                        // Create a new value from the user input
-                        setCountryValue({
-                          label: newValue.inputValue,
-                        });
-                      } else {
-                        setCountryValue(newValue);
-                      }
-                    }
-                  }
-                    selectOnFocus
-                    clearOnBlur
-                    handleHomeEndKeys
-                    id="countries"
-                    options={country}
-                    getOptionLabel={(option) => {
-                      // Value selected with enter, right from the input
-                      if (typeof option === `string`) {
-                        return option;
-                      }
-                      // Add "xxx" option created dynamically
-                      if (option.inputValue) {
-                        return option.inputValue;
-                      }
-                      // Regular option
-                      return option.label;
-                    }}
-                    renderOption={(props, option) => <li {...props}>{option.label}</li>}
-                    fullWidth
-                    renderInput={(params) => (
-                      <TextField {...params} 
-                      label="Countries" variant="outlined" 
-                      color='success' size='small' />
-                    )}
-                  />
-              <TextField sx={{ margin: `1em 0 0 0` }} label={`Institutes`} value={addInstitutes} onChange={(e) => setAddInstitute(e.target.value)} type='email' color={`success`} size='small' fullWidth />
-              <Button variant={`contained`} sx={{ margin: `1em 0 0 0` }} type='submit' color={`success`} onClick={handleAddNewInsitute}>Add</Button>
+              <Typography fontSize={`14px`}>
+                In <strong>{countryTitle}</strong> <br />
+              </Typography>
+              <TextField sx={{ margin: `1em 0 0 0` }} label={`Institutes`} value={instituteName} onChange={(e) => setinstituteName(e.target.value)} type='email' color={`success`} size='small' fullWidth />
+              {!editmode &&
+                <Button variant={`contained`} sx={{ margin: `1em 0 0 0` }} type='submit' color={`success`} onClick={addNewInsistute}>Add</Button>}
+              {editmode &&
+                <Button variant={`contained`} sx={{ margin: `1em 0 0 0` }} type='submit' color={`success`} onClick={updateInsistute}>Update</Button>}
             </Box>
           </Fade>
         </Modal>
-        {/* Toasv t for Email Added for Univeristy */}
+        {/* Toasv t for country  Added for Univeristy */}
         <Snackbar
           anchorOrigin={{ vertical: `top`, horizontal: `center` }}
           open={toast}
@@ -567,7 +579,7 @@ const UniveristiesDetails = () => {
           action={action}
         >
           <Alert onClose={handleCloseToast} severity="success" sx={{ width: `100%` }}>
-            Email Updated Succesfully!
+            {toastmsg}
           </Alert>
         </Snackbar>
         <Snackbar
@@ -581,7 +593,7 @@ const UniveristiesDetails = () => {
             Email Deleted Succesfully!
           </Alert>
         </Snackbar>
-         {/* Add Country */}
+        {/* Add Country */}
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
@@ -598,8 +610,11 @@ const UniveristiesDetails = () => {
               <Typography id="transition-modal-title" variant="h6" component="h2">
                 Add Country
               </Typography>
-              <TextField sx={{ margin: `1em 0 0 0` }} label={`Country`} value={addNewCountry} onChange={(e) => setAddCountry(e.target.value)} type='text' color={`success`} size='small' fullWidth />
-              <Button variant={`contained`} sx={{ margin: `1em 0 0 0` }} type='submit' color={`success`} onClick={handleAddNewCountry}>Add</Button>
+              <TextField sx={{ margin: `1em 0 0 0` }} label={`Country`} value={countryTitle} onChange={(e) => setcountryTitle(e.target.value)} type='text' color={`success`} size='small' fullWidth />
+              {!editmode &&
+                <Button variant={`contained`} sx={{ margin: `1em 0 0 0` }} type='submit' color={`success`} onClick={addNewCountryInDB}>Add</Button>}
+              {editmode &&
+                <Button variant={`contained`} sx={{ margin: `1em 0 0 0` }} type='submit' color={`success`} onClick={updateCountry}>Update</Button>}
             </Box>
           </Fade>
         </Modal>

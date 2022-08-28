@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import  React,{useState,useEffect,FC} from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -13,7 +12,11 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import { Tooltip, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+const Domain = process.env.Domain
+interface AutoProps{
+  templateId:[]
+}
+const AutoPlaySwipeableViews:FC<AutoProps> = autoPlay(SwipeableViews);
 
 function SwipeableTextMobileStepper({
     templateId,
@@ -38,7 +41,7 @@ function SwipeableTextMobileStepper({
  const templateVerify=async () => {
   const data ={templeRegId,templeReg}
   if(templeRegId)
- {const URL = `http://localhost:3000/api/degree/verifytemplate`
+ {const URL = `${Domain}/api/degree/verifytemplate`
   const res = await fetch(URL, {
     method: `POST`, // or 'PUT'
     headers: {
@@ -91,7 +94,7 @@ useEffect(() => {
                   overflow: `hidden`,
                   width: `100%`,
                 }}
-                src={`http://localhost:3000/api/degree/preveiwImage/${step.templateUrl}`}
+                src={`${Domain}/api/degree/preveiwImage/${step.templateUrl}`}
                 alt={step.startDate}
               />
               <Box sx={{display:`flex`,justifyContent:`space-evenly`,width:`100%`}}>

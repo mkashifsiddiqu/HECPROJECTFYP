@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable prettier/prettier */
 import React, { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
@@ -11,6 +10,7 @@ import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 
+const Domain = process.env.Domain
 interface IDegreeProp{
   Mode:string,
   nextAccord:string ,
@@ -83,7 +83,7 @@ const handleChange =
   const [sessionList,setsessionList]= useState([])
   const getCountry = async() =>{
    
-    const URL = `http://localhost:3000/api/hec/countryList/`
+    const URL = `${Domain}/api/hec/countryList/`
     const res = await fetch(URL, {
       method: `GET`, // or 'PUT'
       headers: {
@@ -104,7 +104,7 @@ const handleChange =
     getCountry()
   }, [])
 const getProgrambyID = async() =>{
-    const URL = `http://localhost:3000/api/hec/ListofProgram/${InsituteName}`
+    const URL = `${Domain}/api/hec/ListofProgram/${InsituteName}`
     const res = await fetch(URL, {
       method: `GET`, // or 'PUT'
       headers: {
@@ -129,7 +129,7 @@ const getProgrambyID = async() =>{
   //For Campus 
   const [programId, setprogramId] = useState<string>(``)
   const getCampusbyID = async() =>{
-    const URL = `http://localhost:3000/api/hec/ListofCampus/${programId}`
+    const URL = `${Domain}/api/hec/ListofCampus/${programId}`
     const res = await fetch(URL, {
       method: `GET`, // or 'PUT'
       headers: {
@@ -155,7 +155,7 @@ const getProgrambyID = async() =>{
   //For Department 
   const [campusId, setCampusId] = useState<string>(``)
   const getDepartmentbyID = async() =>{
-    const URL = `http://localhost:3000/api/hec/ListofDepartment/${campusId}`
+    const URL = `${Domain}/api/hec/ListofDepartment/${campusId}`
     const res = await fetch(URL, {
       method: `GET`, // or 'PUT'
       headers: {
@@ -180,7 +180,7 @@ const getProgrambyID = async() =>{
 //for Degree Type
 const [DepartmentId, setDepartmentId] = useState<string>(``)
 const getDegreeTypeID = async() =>{
-  const URL = `http://localhost:3000/api/hec/ListOfdegreeType/${DepartmentId}`
+  const URL = `${Domain}/api/hec/ListOfdegreeType/${DepartmentId}`
   const res = await fetch(URL, {
     method: `GET`, // or 'PUT'
     headers: {
@@ -204,7 +204,7 @@ useEffect(()=>{
 //for Session
 const [DegreeTypetId, setDegreeTypetId] = useState<string>(``)
 const getSessionID = async() =>{
-  const URL = `http://localhost:3000/api/hec/ListOfSession/${DegreeTypetId}`
+  const URL = `${Domain}/api/hec/ListOfSession/${DegreeTypetId}`
   const res = await fetch(URL, {
     method: `GET`, // or 'PUT'
     headers: {

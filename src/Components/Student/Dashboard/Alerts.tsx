@@ -1,7 +1,6 @@
-/* eslint-disable prettier/prettier */
 import { Alert, Paper } from '@mui/material';
 import React from 'react';
-import aloud from '../../../../public/aloud.png';
+import aloud from '@/public/aloud.png';
 import Image from 'next/image';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';

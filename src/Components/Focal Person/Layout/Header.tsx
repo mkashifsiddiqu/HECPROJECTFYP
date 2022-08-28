@@ -1,9 +1,7 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable prettier/prettier */
 import { AppBar, Box,Typography } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
-import logo from '../../../../public/logo.png'
+import logo from '@/public/logo.png'
 import Personalprofile from './Personalprofile';
 import Bellnotification from './Bellnotification';
 const Header = () => {
