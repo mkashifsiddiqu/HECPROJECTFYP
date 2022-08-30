@@ -4,24 +4,25 @@
 import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material';
 import Image from 'next/image';
-import logo from '../../../public/logo-white.png'
+import logo from '@/public/logo-white.png'
 import { Paper, Typography, TextField, Button, Grid, Box, Link } from '@mui/material';
-import chrome from '../../../public/Brower/chrome.svg'
-import firefox from '../../../public/Brower/firefox.svg'
-import opera from '../../../public/Brower/opera.svg'
-import safari from '../../../public/Brower/safari.svg'
-import edge from '../../../public/Brower/edge.svg'
-import idCard from '../../../public/ForgotPassword/dasid.png';
-import emailPic from '../../../public/ForgotPassword/email.png';
+import chrome from '@/public/Brower/chrome.svg'
+import firefox from '@/public/Brower/firefox.svg'
+import opera from '@/public/Brower/opera.svg'
+import safari from '@/public/Brower/safari.svg'
+import edge from '@/public/Brower/edge.svg'
+import idCard from '@/public/ForgotPassword/dasid.png';
+import emailPic from '@/public/ForgotPassword/email.png';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
-import bg from '../../../public/BackgroundImage/bg.jpg';
+import bg from '@/public/BackgroundImage/bg.jpg';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import type {  ChangeEvent } from 'react'
 import { loginuser } from '@/Components/Redux/action/index'
 import {useDispatch} from 'react-redux'
 import { setCookie } from 'cookies-next';
+const Domain = process.env.Domain
 const theme = createTheme({
   typography: {
     fontFamily: `montserrat`,
@@ -42,7 +43,7 @@ const Login = () => {
   const onSubmit = async (e: MouseEvent) => {
     e.preventDefault();
     const data = { email, password }
-    const res = await fetch(`/api/admin/User/login`, {
+    const res = await fetch(`${Domain}/api/admin/User/login`, {
       method: `POST`, // or 'PUT'
       headers: {
         'Content-Type': `application/json`,
@@ -79,7 +80,7 @@ const Login = () => {
             display: `flex`, flexDirection: `column`,
             alignItems: { lg: `flex-start`, md: `center`, sm: `center`, xs: `center` }
           }}>
-            <Image sx={{ marginBottom: `10px`, width: `20px`, height: `92px`, position: `fixed` }} src={logo} alt={`logo`} />
+            <Image src={logo} alt={`logo`} />
             <Typography fontSize={`27px`} fontWeight={`600`} variant="h3" color="#fff" sx={{ mb: `6.5px` }}>Welcome To {<br />} Higher Education Commission</Typography>
 
           </Box>
@@ -301,7 +302,7 @@ const Login = () => {
                     FORGOT PASSWORD ?
                   </Typography>
                   <Button variant="contained" sx={{width: `382px`,height: `48px`,mt: `12px`,backgroundColor: `#1BB55E`,
-                    '&:hover': { backgroundColor: `#1BB55E` }}}  onClick={onSubmit}>Sign in</Button>
+                    '&:hover': { backgroundColor: `#1BB55E` }}}  onClick={(e)=>onSubmit(e)}>Sign in</Button>
                   <Box sx={{ display: `flex`, justifyContent: `center`, mt: `12px` }}>
                     <Grid>
                       <Grid
